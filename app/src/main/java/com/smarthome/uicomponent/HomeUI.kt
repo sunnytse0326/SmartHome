@@ -1,9 +1,11 @@
 package com.smarthome.uicomponent
 
+import android.graphics.Color
 import android.support.v7.widget.RecyclerView
 import android.view.Gravity
 import android.view.View
 import android.widget.RelativeLayout
+import com.smarthome.R
 import com.smarthome.activity.HomeActivity
 import org.jetbrains.anko.*
 import org.jetbrains.anko.recyclerview.v7.recyclerView
@@ -23,6 +25,7 @@ class HomeUI : AnkoComponent<HomeActivity> {
                 height = matchParent
             }
             loadLty = relativeLayout{
+                backgroundColor = Color.WHITE
                 progressBar {
                 }.lparams{
                     width = wrapContent

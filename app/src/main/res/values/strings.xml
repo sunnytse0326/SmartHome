@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">SmartHome</string>
+
+    <string name="bedroom">Bedroom</string>
+    <string name="kitchen">Kitchen</string>
+    <string name="living_room">Living Room</string>
 </resources>
