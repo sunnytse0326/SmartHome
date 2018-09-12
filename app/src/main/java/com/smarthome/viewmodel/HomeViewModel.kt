@@ -3,6 +3,7 @@ package com.smarthome.viewmodel
 import android.arch.lifecycle.*
 import android.util.Log
 import com.github.kittinunf.fuel.core.FuelError
+import com.smarthome.model.FixtureControl
 import com.smarthome.model.Room
 import com.smarthome.model.Rooms
 import com.smarthome.repository.BaseRepository
@@ -12,10 +13,10 @@ import com.smarthome.utils.NetworkCache
 import java.util.*
 
 class HomeViewModel(val lifecycle: Lifecycle, private val lifecycleOwner: LifecycleOwner): ViewModel() {
-    val rooms: MutableLiveData<Rooms> = MutableLiveData()
-    val error: MutableLiveData<FuelError> = MutableLiveData()
-
-    val roomRepository: RoomRepository = RoomRepository()
+    private val rooms: MutableLiveData<Rooms> = MutableLiveData()
+    private val error: MutableLiveData<FuelError> = MutableLiveData()
+    private val fixtureControl: MutableLiveData<FixtureControl> = MutableLiveData()
+    private val roomRepository: RoomRepository = RoomRepository()
 
     fun getRoomFixtures(): MutableLiveData<Rooms> {
         roomRepository.fetchRooms()?.subscribe{ result, _ ->
@@ -35,8 +36,16 @@ class HomeViewModel(val lifecycle: Lifecycle, private val lifecycleOwner: Lifecy
         return rooms
     }
 
-    fun addPosts(){
-
+    fun controlRoomFixtures(url: String):MutableLiveData<FixtureControl> {
+        roomRepository.controlFixture(url)?.subscribe { result, _ ->
+            val (data, err) = result
+            if(err == null){
+                fixtureControl?.value = data
+            } else{
+                error.value = err
+            }
+        }
+        return fixtureControl
     }
 
     fun getErrors(): MutableLiveData<FuelError> {
