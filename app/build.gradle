@@ -59,4 +59,6 @@ dependencies {
     implementation "org.jetbrains.anko:anko-cardview-v7:$anko_version"
     implementation "org.jetbrains.anko:anko-commons:$anko_version"
 
+    /* Job Scheduler */
+    implementation 'com.evernote:android-job:1.2.4'
 }

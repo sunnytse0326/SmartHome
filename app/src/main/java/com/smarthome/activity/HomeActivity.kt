@@ -7,11 +7,13 @@ import android.arch.lifecycle.ViewModelProviders
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
-import android.util.Log
 import android.view.View
 import android.widget.Toast
+import com.evernote.android.job.JobManager
 import com.smarthome.R
 import com.smarthome.adapter.HomeRecyclerViewAdapter
+import com.smarthome.jobscheduler.JobScheduleCreator
+import com.smarthome.jobscheduler.SyncWeatherJob
 import com.smarthome.model.Room
 import com.smarthome.model.Rooms
 import com.smarthome.uicomponent.HomeUI
@@ -56,5 +58,9 @@ class HomeActivity : AppCompatActivity(), LifecycleObserver {
 
         mainUI.recyclerView.layoutManager = LinearLayoutManager(this)
         mainUI.recyclerView.adapter = adapter
+
+        JobManager.create(this).addJobCreator(JobScheduleCreator())
+
+        SyncWeatherJob.scheduleAdvancedJob()
     }
 }
