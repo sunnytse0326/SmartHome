@@ -4,4 +4,9 @@
     <string name="bedroom">Bedroom</string>
     <string name="kitchen">Kitchen</string>
     <string name="living_room">Living Room</string>
+
+    <string name="error_failed_api">Fetch API Failed</string>
+
+    <string name="switch_on_msg">Switch is on</string>
+    <string name="switch_off_msg">Switch is off</string>
 </resources>
