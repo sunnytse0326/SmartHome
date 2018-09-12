@@ -25,11 +25,4 @@ data class Rooms(val bedRoom: Room, val livingRoom: Room, val kitchen: Room): Se
             return Rooms.init(json.obj())
         }
     }
-
-    class ListDeserializer : Deserializable<MutableList<Rooms>> {
-        override fun deserialize(response: Response): MutableList<Rooms> {
-            val json = Json(response.data.toString(Charset.defaultCharset()))
-            return json.array().asSequence().map{ Rooms.init(it as JSONObject) }.toMutableList()
-        }
-    }
 }
