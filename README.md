@@ -43,8 +43,8 @@ The following diagram shows the flow how it works in the project:
 # Implementation
 We use an activity which shows all room fixtures information and switches can control all facilities directly
 <p float="left">
-  <img src="https://github.com/sunnytse0326/SociNet/blob/master/screenshot/screenshot1.png" width="250" height="400">
-  <img src="https://github.com/sunnytse0326/SociNet/blob/master/screenshot/screenshot2.png" width="250" height="400">
+  <img src="https://github.com/sunnytse0326/SmartHome/blob/master/screenshot/screenshot1.png" width="250" height="400">
+  <img src="https://github.com/sunnytse0326/SmartHome/blob/master/screenshot/screenshot2.png" width="250" height="400">
 </p>
 
 For the air conditioning, we use [Job Scheduler](https://github.com/evernote/android-job) to monitor the weather API periodially by 15 minutes.
