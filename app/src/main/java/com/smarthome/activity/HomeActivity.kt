@@ -9,6 +9,8 @@ import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import android.view.View
+import android.widget.Toast
+import com.smarthome.R
 import com.smarthome.adapter.HomeRecyclerViewAdapter
 import com.smarthome.model.Room
 import com.smarthome.model.Rooms
@@ -37,11 +39,18 @@ class HomeActivity : AppCompatActivity(), LifecycleObserver {
             adapter.setRoomData(rooms)
         })
 
+        homeViewModel.getErrors().observe(this, Observer { rooms ->
+            mainUI.loadLty.visibility = View.GONE
+            Toast.makeText(this@HomeActivity, this@HomeActivity.getString(R.string.error_failed_api), Toast.LENGTH_SHORT).show()
+        })
+
         rooms = Rooms(Room(mutableMapOf()), Room(mutableMapOf()), Room(mutableMapOf()))
 
-        adapter = HomeRecyclerViewAdapter(object : HomeRecyclerViewAdapter.OnClickListener{
-            override fun onBackgroundClicked(position: Int) {
-
+        adapter = HomeRecyclerViewAdapter(object : HomeRecyclerViewAdapter.OnClickListener {
+            override fun onSwitchChanged(checked: Boolean, url: String) {
+                homeViewModel.controlRoomFixtures(url).observe(this@HomeActivity, Observer { rooms ->
+                    Toast.makeText(this@HomeActivity, if (checked) this@HomeActivity.getString(R.string.switch_on_msg) else this@HomeActivity.getString(R.string.switch_off_msg), Toast.LENGTH_SHORT).show()
+                })
             }
         }, rooms)
 
