@@ -13,9 +13,11 @@ import com.smarthome.repository.RoomRepository
 import com.smarthome.uicomponent.*
 import org.jetbrains.anko.AnkoContext
 
-class HomeRecyclerViewAdapter constructor(mListener: OnClickListener, mRooms: Rooms) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class HomeRecyclerViewAdapter constructor(mContext: Context, mListener: OnClickListener, mRooms: Rooms) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private var headerView: View? = null
     private var footerView: View? = null
+
+    private val context = mContext
     var listener: OnClickListener = mListener
     var rooms: Rooms = mRooms
 
@@ -66,11 +68,11 @@ class HomeRecyclerViewAdapter constructor(mListener: OnClickListener, mRooms: Ro
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is HomeRecyclerUITitleViewHolder) {
             if (position == 0) {
-                holder.title.text = SmartHomeApplication.context.resources.getString(R.string.bedroom)
+                holder.title.text = context.resources.getString(R.string.bedroom)
             } else if (position == rooms?.bedRoom?.fixture?.size + 1) {
-                holder.title.text = SmartHomeApplication.context.resources.getString(R.string.living_room)
+                holder.title.text = context.resources.getString(R.string.living_room)
             } else if (position == rooms?.bedRoom?.fixture?.size + rooms?.livingRoom?.fixture?.size + 2) {
-                holder.title.text = SmartHomeApplication.context.resources.getString(R.string.kitchen)
+                holder.title.text = context.resources.getString(R.string.kitchen)
             }
         } else if (holder is HomeRecyclerUIContentViewHolder) {
             if (position > 0 && position < rooms?.bedRoom?.fixture?.size + 1) {

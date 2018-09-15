@@ -49,6 +49,7 @@ class HomeActivity : AppCompatActivity(), LifecycleObserver {
         rooms = Rooms(Room(mutableMapOf()), Room(mutableMapOf()), Room(mutableMapOf()))
 
         adapter = HomeRecyclerViewAdapter(object : HomeRecyclerViewAdapter.OnClickListener {
+        adapter = HomeRecyclerViewAdapter(this, object : HomeRecyclerViewAdapter.OnClickListener {
             override fun onSwitchChanged(checked: Boolean, url: String) {
                 homeViewModel.controlRoomFixtures(url).observe(this@HomeActivity, Observer { rooms ->
                     Toast.makeText(this@HomeActivity, if (checked) this@HomeActivity.getString(R.string.switch_on_msg) else this@HomeActivity.getString(R.string.switch_off_msg), Toast.LENGTH_SHORT).show()
