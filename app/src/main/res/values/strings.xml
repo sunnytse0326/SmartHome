@@ -9,4 +9,6 @@
 
     <string name="switch_on_msg">Switch is on</string>
     <string name="switch_off_msg">Switch is off</string>
+
+    <string name="switch_announce">Switch is %s</string>
 </resources>
