@@ -1,21 +1,22 @@
 package com.smarthome.adapter
 
+import android.content.Context
 import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.View
 import android.view.ViewGroup
-import android.widget.CompoundButton
 import com.smarthome.R
-import com.smarthome.application.SmartHomeApplication
 import com.smarthome.model.Room
 import com.smarthome.model.Rooms
 import com.smarthome.repository.RoomRepository
 import com.smarthome.uicomponent.*
 import org.jetbrains.anko.AnkoContext
 
-class HomeRecyclerViewAdapter constructor(mListener: OnClickListener, mRooms: Rooms) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class HomeRecyclerViewAdapter constructor(mContext: Context, mListener: OnClickListener, mRooms: Rooms) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private var headerView: View? = null
     private var footerView: View? = null
+
+    private val context = mContext
     var listener: OnClickListener = mListener
     var rooms: Rooms = mRooms
 
@@ -66,24 +67,30 @@ class HomeRecyclerViewAdapter constructor(mListener: OnClickListener, mRooms: Ro
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is HomeRecyclerUITitleViewHolder) {
             if (position == 0) {
-                holder.title.text = SmartHomeApplication.context.resources.getString(R.string.bedroom)
+                holder.title.text = context.resources.getString(R.string.bedroom)
             } else if (position == rooms?.bedRoom?.fixture?.size + 1) {
-                holder.title.text = SmartHomeApplication.context.resources.getString(R.string.living_room)
+                holder.title.text = context.resources.getString(R.string.living_room)
             } else if (position == rooms?.bedRoom?.fixture?.size + rooms?.livingRoom?.fixture?.size + 2) {
-                holder.title.text = SmartHomeApplication.context.resources.getString(R.string.kitchen)
+                holder.title.text = context.resources.getString(R.string.kitchen)
             }
         } else if (holder is HomeRecyclerUIContentViewHolder) {
+            holder.switch.setOnCheckedChangeListener(null)
+
             if (position > 0 && position < rooms?.bedRoom?.fixture?.size + 1) {
                 val key = rooms?.bedRoom?.fixture.keys?.elementAt(position - 1)
                 holder.title.text = key
+
+                holder.switch.isChecked = rooms?.bedRoom?.fixture.get(key)?:false
 
                 holder.switch.setOnCheckedChangeListener { _, isChecked ->
                     rooms?.bedRoom?.fixture?.put(key, isChecked)
                     listener?.onSwitchChanged(isChecked, "/${RoomRepository.Companion.RoomType.BEDROOM.url}/${key.toLowerCase()}/${if (isChecked) "on" else "off"}")
                 }
             } else if (position > rooms?.bedRoom?.fixture?.size + 1 && position < rooms?.bedRoom?.fixture?.size + rooms?.livingRoom?.fixture?.size + 2) {
-                val key = rooms?.bedRoom?.fixture.keys?.elementAt((position - rooms?.bedRoom?.fixture?.size - 2))
+                val key = rooms?.livingRoom?.fixture.keys?.elementAt((position - rooms?.bedRoom?.fixture?.size - 2))
                 holder.title.text = key
+
+                holder.switch.isChecked = rooms?.livingRoom?.fixture.get(key)?:false
 
                 holder.switch.setOnCheckedChangeListener { _, isChecked ->
                     rooms?.livingRoom?.fixture?.put(key, isChecked)
@@ -92,6 +99,8 @@ class HomeRecyclerViewAdapter constructor(mListener: OnClickListener, mRooms: Ro
             } else if (position > rooms?.bedRoom?.fixture?.size + rooms?.livingRoom?.fixture?.size + 2) {
                 val key = rooms?.kitchen?.fixture.keys?.elementAt((position - rooms?.bedRoom?.fixture?.size - rooms?.livingRoom?.fixture?.size - 3))
                 holder.title.text = key
+
+                holder.switch.isChecked = rooms?.kitchen?.fixture.get(key)?:false
 
                 holder.switch.setOnCheckedChangeListener { _, isChecked ->
                     rooms?.kitchen?.fixture?.put(key, isChecked)
