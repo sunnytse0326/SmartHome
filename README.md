@@ -47,7 +47,16 @@ We use an activity which shows all room fixtures information and switches can co
   <img src="https://github.com/sunnytse0326/SmartHome/blob/master/screenshot/screenshot2.png" width="250" height="400">
 </p>
 
-For the air conditioning, we use [Job Scheduler](https://github.com/evernote/android-job) to monitor the weather API periodially by 15 minutes.
+For the air conditioning, we use [Work Manager](https://developer.android.com/topic/libraries/architecture/workmanager/basics) to monitor the weather API periodially by 15 minutes. If the application is in background, it will pop up a notification notifying user the changes.
+
+
+# TDD test case
+In this example, we added several Test Driven Development (TDD) test cases for some simple checking of UI and view model. 
+
+# Todo list
+- BDD test cases
+We would like to demonstrate how to implement the black-box testing with the use of steps file inside the project. 
+
 
 # Library used:
 Anko (Layout Design)
