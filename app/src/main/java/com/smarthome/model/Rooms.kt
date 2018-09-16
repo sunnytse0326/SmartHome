@@ -9,7 +9,7 @@ import org.json.JSONObject
 import java.io.Serializable
 import java.nio.charset.Charset
 
-data class Rooms(val bedRoom: Room, val livingRoom: Room, val kitchen: Room): Serializable {
+open class Rooms(val bedRoom: Room, val livingRoom: Room, val kitchen: Room): Serializable {
     companion object {
         fun init(json: JSONObject): Rooms {
             val roomsObj = json.getJSONObject("rooms")

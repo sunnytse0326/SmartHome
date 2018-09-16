@@ -17,13 +17,18 @@ android {
         targetSdkVersion 27
         versionCode 1
         versionName "1.0"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testApplicationId "com.smarthome.test"
+        testInstrumentationRunner "com.smarthome.SmartHomeCucumberRunner"
+        //testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+    testOptions {
+        unitTests.returnDefaultValues = true
     }
 }
 
@@ -63,4 +68,18 @@ dependencies {
 
     /* Job Scheduler */
     implementation "android.arch.work:work-runtime:$work_version"
+
+    /* Mock lib for TDD test cases */
+    testImplementation "org.powermock:powermock-module-junit4:1.7.4"
+    testImplementation "org.powermock:powermock-api-mockito2:1.7.4"
+
+    /* Cucumber Test Libraries for BDD test cases */
+    androidTestImplementation 'com.android.support.test:rules:1.0.2'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'info.cukes:cucumber-junit:1.1.4'
+    androidTestImplementation 'info.cukes:cucumber-android:1.2.4@jar'
+    androidTestImplementation 'info.cukes:cucumber-picocontainer:1.2.4'
+    androidTestImplementation 'info.cukes:cucumber-jvm:1.2.4'
+    androidTestImplementation 'info.cukes:cucumber-core:1.2.4'
+    androidTestImplementation 'info.cukes:cucumber-jvm-deps:1.0.3'
 }
